@@ -4,13 +4,15 @@ import * as vscode from 'vscode';
 import * as utils from './utils';
 
 const DEFAULT_CONTEXT = 0;
+const DEFAULT_OPACITY = 50;
 
 let enabled = false;
 let context = DEFAULT_CONTEXT;
-let opacity = 50;
+let opacity = DEFAULT_OPACITY;
 let delay = 200;
 let commandScope = true;
 const updateContextBy = 1;
+let updateOpacityBy = 5;
 
 let dimDecoration: vscode.TextEditorDecorationType;
 let normalDecoration = vscode.window.createTextEditorDecorationType(<vscode.DecorationRenderOptions> {
@@ -29,11 +31,15 @@ export function activate(context: vscode.ExtensionContext) {
     });
     let incrementContextCommandRegistration = vscode.commands.registerCommand('dimmer.IncrementContext', () => updateContextSize(updateContextBy));
     let decrementContextCommandRegistration = vscode.commands.registerCommand('dimmer.DecrementContext', () => updateContextSize(updateContextBy * -1));
+    let incrementOpacityCommandRegistration = vscode.commands.registerCommand('dimmer.IncrementOpacity', () => updateOpacity(updateOpacityBy));
+    let decrementOpacityCommandRegistration = vscode.commands.registerCommand('dimmer.DecrementOpacity', () => updateOpacity(updateOpacityBy * -1));
 
     initialize();
 
     context.subscriptions.push(selectionRegistration, configRegistration, commandRegistration, incrementContextCommandRegistration, 
         decrementContextCommandRegistration, textEditorChangeRegistration);
+    context.subscriptions.push(selectionRegistration, configRegistration, commandRegistration, incrementOpacityCommandRegistration, 
+        decrementOpacityCommandRegistration, textEditorChangeRegistration);
 }
 
 function updateIfEnabled(textEditor: vscode.TextEditor) {
@@ -55,8 +61,8 @@ function readConfig() {
     let config = vscode.workspace.getConfiguration('dimmer');
     enabled = config.get('enabled', false);
     commandScope = config.get('toggleDimmerCommandScope', 'user') === 'user';
-    opacity = config.get('opacity', 50);
     context = config.get('context', DEFAULT_CONTEXT);
+    opacity = config.get('opacity', DEFAULT_OPACITY);
     delay = config.get('delay', 200);
     delay = delay < 0 ? 0 : delay;
 }
@@ -137,6 +143,14 @@ function updateContextSize(updateBy: number) {
     context = config.get('context', DEFAULT_CONTEXT);
     context += updateBy;
     config.update('context', context);
+}
+
+function updateOpacity(updateBy: number) {
+    let config = vscode.workspace.getConfiguration('dimmer');
+    opacity = config.get('opacity', DEFAULT_OPACITY);
+    opacity += updateBy;
+    opacity = utils.keepValueBetweenBoudaries(opacity, 0, 100);
+    config.update('opacity', opacity);
 }
 
 export function deactivate() {

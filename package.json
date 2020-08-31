@@ -40,6 +40,14 @@
             {
             "command": "dimmer.DecrementContext",
             "title": "Dimmer: Decrement Context"
+            },
+            {
+            "command": "dimmer.IncrementOpacity",
+            "title": "Dimmer: Increment Opacity"
+            },
+            {
+            "command": "dimmer.DecrementOpacity",
+            "title": "Dimmer: Decrement Opacity"
             }
         ],
         "configuration": {
