@@ -1,5 +1,7 @@
 # vscode-dimmer 
 
+> The **original project** was released by **Cody Hoover** at https://github.com/hoovercj/vscode-dimmer. I've used the project for a long time and in 2019 I decided to [make some contributions](https://github.com/hoovercj/vscode-dimmer/pulls/alefragnani), but the project didn't receive any updates after 2016, and my contributions were not merged. So, I decided to evolve this fork.
+
 ## Features
 
 Dims text outside of selections by reducing the opacity of the text. Supports multiple selections.
@@ -35,7 +37,13 @@ By default the extension will dim all lines that don't have an extension. Use th
 }
 ```
 
-### 2.0.0
+### 3.0.0 (in development)
+- Add commands to Increment and Decrement Context
+- Add commands to Increment and Decrement Opacity
+- New identity
+- New features being planned
+
+### 2.0.0 
 - Dim on editor change (e.g. ctrl+tab). Thanks @roblourens
 - Highlight context (n lines before/after). Thanks @rebornix
 - Breaking: `dimmer.dimSelectedLines` has been replaced by `dimmer.context`. 
@@ -43,3 +51,8 @@ By default the extension will dim all lines that don't have an extension. Use th
 ### 1.0.0
 
 Initial release
+
+# License
+
+[MIT](LICENSE.md) &copy; Alessandro Fragnani
+[MIT](LICENSE.md) &copy; Cody Hoover
