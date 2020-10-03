@@ -1,4 +1,4 @@
-Copyright (c) Cody Hoover & Alessandro Fragnani
+Copyright (c) Cody Hoover
 
 All rights reserved.
 
